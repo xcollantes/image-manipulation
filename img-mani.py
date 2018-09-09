@@ -45,31 +45,32 @@ def flip(img):
 
 def greenScreen(bg, gs):
 	# Establish counter for green screen image 
-	#countGS = (int(gs.size[0] - 1), int(gs.size[1] - 1))
-	WIDTH = gs.size[0]
-	HEIGHT = gs.size[1]
+	WIDTH = gs.size[0] - 1
+	HEIGHT = gs.size[1] - 1
 	pos = (0, 0)
-	
-	# Stop when smallest dimension is reached on green screen image 
-	while pos[0] <= WIDTH:
-	
-		while pos[1] <= HEIGHT:
-			print("processing pixel: ", pos)
+	try:
+		
+		# Stop when smallest dimension is reached on green screen image 
+		while pos[0] <= WIDTH:
+		
+			while pos[1] <= HEIGHT:
+				print("processing pixel: ", pos)
 
-			if gs.getpixel(pos)[1] > 170:  # If pixel on green screen image is somewhat green 
-				print("change pixel: ", pos)
+				if gs.getpixel(pos)[1] > 160:  # If pixel on green screen image is somewhat green 
+					print("change pixel: ", pos)
+					
+					frontColor = bg.getpixel(pos)  # Get corresponding pixel color of the same coordinates 
+					gs.putpixel(pos, frontColor)
+				else:
+					pass
 				
-				frontColor = bg.getpixel(pos)  # Get corresponding pixel color of the same coordinates 
-				gs.putpixel(pos, frontColor)
-			else:
-				pass
-			
-			pos[1] += 1  # Increment height by 1
+				pos = (pos[0], pos[1] + 1)  # Increment height by 1
 
-		pos[1] = 0
-		pos[0] += 1  # Increment width by 1
-
-	
+			pos = (pos[0], 0)
+			pos = (pos[0] + 1, pos[1])  # Increment width by 1
+	except Exception:
+		pass
+		
 	gs.save(arrow.now('US/Pacific').format('DD-MMM-YY_HH-mm-SS') + '.png')
 	
 if __name__=='__main__':
