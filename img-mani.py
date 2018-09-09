@@ -23,10 +23,30 @@ def tile():
 	#cropped.paste(i, (50, 50))
 	#cropped.save('sample.png')
 
-
+def cutHalf():
+	origin = Image.open('girls.jpg')
+	w, h = origin.size
+	half = origin.resize((int(w / 2), int(h / 2)))
+	half.save('half.png')
+	
+	# Expand will move image dimension with rotation 
+def turn(image, degree, bg=True):
+	image.rotate(degree, expand=bg).save('rotate' + str(degree) + '.png')
+	
+	
+def flip(img):
+	img.transpose(Image.FLIP_LEFT_RIGHT).save('transpose_horizontal.png')
+	img.transpose(Image.FLIP_TOP_BOTTOM).save('transpose_vertical.png')
+	
 
 if __name__=='__main__':
 	os.chdir('lib/')
+	i = Image.open('girls.jpg')
 	#pillow()
-	tile()
+	#tile()
+	#cutHalf()
+	turn(i, 90)
+	turn(i, 180)
+	
+	flip(i)
 	
