@@ -3,7 +3,9 @@
 # @content: Ch. 17 from Al Sweigart's "How to Automate the Boring Stuff with Python"
 
 from PIL import Image
-import os, sys
+from PIL import ImageColor
+import os, arrow
+
 
 def pillow():
 	img = Image.open('girls.jpg')
@@ -23,11 +25,13 @@ def tile():
 	#cropped.paste(i, (50, 50))
 	#cropped.save('sample.png')
 
+	
 def cutHalf():
 	origin = Image.open('girls.jpg')
 	w, h = origin.size
 	half = origin.resize((int(w / 2), int(h / 2)))
 	half.save('half.png')
+	
 	
 	# Expand will move image dimension with rotation 
 def turn(image, degree, bg=True):
@@ -39,14 +43,38 @@ def flip(img):
 	img.transpose(Image.FLIP_TOP_BOTTOM).save('transpose_vertical.png')
 	
 
+def greenScreen(bg, gs):
+	# Establish counter for green screen image 
+	countGS = (int(gs.size[0] - 1), int(gs.size[1] - 1))
+	countGSw = gs.size[0]
+	countGSh = gs.size[1]
+	
+	print(countGS)
+	# Stop when smallest dimension is reached on green screen image 
+	while countGS[0] >= 0 and countGS[1] >= 0:
+		print("processing pixel: ", countGS)
+
+		if gs.getpixel(countGS)[1] > 170:  # If pixel on green screen image is somewhat green 
+			print("change pixel: ", countGS)
+			
+			frontColor = bg.getpixel(countGS)  # Get corresponding pixel color of the same coordinates 
+			gs.putpixel(countGS, frontColor)
+		
+		countGS = (countGS[0] - 1, countGS[1] - 1)  # Increment to next pixel 
+	
+	gs.save(arrow.now('US/Pacific').format('DD-MMM-YY_HH-mm-SS') + '.png')
+	
 if __name__=='__main__':
 	os.chdir('lib/')
 	i = Image.open('girls.jpg')
 	#pillow()
 	#tile()
 	#cutHalf()
-	turn(i, 90)
-	turn(i, 180)
+	#turn(i, 90)
+	#turn(i, 180)
 	
-	flip(i)
+	#flip(i)
+	back = Image.open('transpose_horizontal.png')
+	shia = Image.open('shia.jpg')
+	greenScreen(back, shia)
 	
