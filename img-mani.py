@@ -12,10 +12,19 @@ def pillow():
 	print (img.format)
 	print (img.format_description)
 	
+	
+def tile():
+	x = 320
+	y = 160
+	i = Image.open('girls.jpg')
+	cropped = i.crop((x, 0, x + 500, y + 500))
+	cropped.save('sample.png')
+	
 
 
 
 
 if __name__=='__main__':
 	os.chdir('lib/')
-	pillow()
+	#pillow()
+	#tile()
