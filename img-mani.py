@@ -56,7 +56,7 @@ def greenScreen(bg, gs):
 			while pos[1] <= HEIGHT:
 				print("processing pixel: ", pos)
 
-				if gs.getpixel(pos)[1] > 160:  # If pixel on green screen image is somewhat green 
+				if gs.getpixel(pos)[1] > 150:  # If pixel on green screen image is somewhat green 
 					print("change pixel: ", pos)
 					
 					frontColor = bg.getpixel(pos)  # Get corresponding pixel color of the same coordinates 
