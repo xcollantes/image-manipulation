@@ -20,11 +20,13 @@ def tile():
 	cropped = i.crop((x, 0, x + 500, y + 500))
 	cropped.save('sample.png')
 	
-
+	#cropped.paste(i, (50, 50))
+	#cropped.save('sample.png')
 
 
 
 if __name__=='__main__':
 	os.chdir('lib/')
 	#pillow()
-	#tile()
+	tile()
+	
