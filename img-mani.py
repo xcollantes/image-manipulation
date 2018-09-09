@@ -7,6 +7,10 @@ import os, sys
 
 def pillow():
 	img = Image.open('girls.jpg')
+	print (img.size)
+	print (img.filename)
+	print (img.format)
+	print (img.format_description)
 	
 
 
